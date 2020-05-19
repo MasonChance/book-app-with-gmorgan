@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 
 //Middleware -public files are front end facing
-app.use(express.static('.public/styles'));
+app.use(express.static('./public/styles'));
 app.use(express.urlencoded({extended: true}));
 
 
@@ -20,5 +20,11 @@ app.set('view engine', 'ejs');
 
 
 app.get('/', (req, res) => {
-  res.render('index.ejs');
+  console.log(req.body);
+  res.redirect('/pages/searches/new.ejs');
 });
+
+app.post('/searches/new', (req, res) => res.render('/pages/searches/new.ejs'));
+
+
+app.listen(PORT, console.log(`we runnin cool runnins @ ${PORT}`));
