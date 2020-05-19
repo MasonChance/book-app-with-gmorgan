@@ -13,11 +13,13 @@
 </head>
 
 <body>
-  <h1>
-  <form action="/views/pages/searches/new.ejs" method="POST"></form>
-  <label for="search"></label>
-  <input name="search" type="text" 
-
+  <h1></h1>
+  <form action="/pages/searches/new" method="GET">
+  <label for="search">Search</label>
+  <input name="search" type="text">
+  <label for="filter">Search by new</label>
+  <input name="filter" type="checkbox">
+  </form>
   
 </body>
 </html>
