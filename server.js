@@ -21,10 +21,10 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
   console.log(req.body);
-  res.redirect('/pages/searches/new.ejs');
+  res.redirect('/pages/searches/new');
 });
 
-app.post('/searches/new', (req, res) => res.render('/pages/searches/new.ejs'));
+app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
 
 
 app.listen(PORT, console.log(`we runnin cool runnins @ ${PORT}`));
