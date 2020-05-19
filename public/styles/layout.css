@@ -1,0 +1,8 @@
+*{
+  box-sizing: border-box;
+  outline: dotted purple 2px;
+}
+
+body {
+  background-color: seagreen;
+}
