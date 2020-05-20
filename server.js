@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
 
 app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
 
+// app.get('/pages/searches/show,', )
 app.post('/pages/searches/show', displayResults);
 
 

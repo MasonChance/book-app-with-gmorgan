@@ -30,30 +30,33 @@ Book.Query = function (req){ // whatever we pass as terms will be determined by 
   
 };
 
-function displayResults(req, res){ 
-  console.log(`req.query.search@ displayResults:bookapi  ${req.body.search}`);
-  res.send(superQuery(req, res));
+function renderResults(result_list){ 
+  
+  res.render('pages/searches/show', {'result_list' : result_list});
 }
 
 // passes query through query constructor sends to api returns array of objects to 
 //display results. 
-function superQuery(req, res){
+function displayResults(req, res){
   const url = 'https://www.googleapis.com/books/v1/volumes';
   const query = new Book.Query(req);
 
   superagent.get(url)
     .query(query)
     .then(result => makeItSo(result, res))
+    .then(result_list => renderResults(result_list))
     .catch(error => {
       console.log(`error from .catch: ${error}`)
       // res.redirect(error, '..veiws/pages/error.ejs')
     })
 };
 
-function makeItSo(result, res){ 
-  console.log('result.body[0].items[0]:', result.body.items[0])//;[x] this gets what we need. 
+function makeItSo(result){ 
+  // console.log('result.body[0].items[0]:', result.body.items[0])//;[x] this gets what we need. 
   const list = result.body.items.map(curr => new Book(curr)); 
-  res.render('pages/searches/show', {result_list : list})
+  // res.render('pages/searches/show', {result_list : list})
+  console.log(`result_list : list ${list[0]}`)
+  return  list;
 }
 
 
