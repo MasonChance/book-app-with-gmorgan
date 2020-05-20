@@ -30,9 +30,19 @@ app.get('/', (req, res) => {
 app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
 
 app.post('/pages/searches/show', displayResults);
+
+
 app.get('/pages/searches/error', () => {
   res.send('wrong turn')
 })
+
+
+
+
+
+
+
+
 
 
 app.listen(PORT, console.log(`we runnin cool runnins @ ${PORT}`));
