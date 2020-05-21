@@ -44,7 +44,6 @@ app.post('/pages/searches/show', displayResults);
 
 app.get('/pages/searches/error', (req, res) => {
   res.render('wrong turn')
-})
 
 
 

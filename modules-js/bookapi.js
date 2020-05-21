@@ -25,12 +25,14 @@ function Book(obj){
   this.synopsis = obj.volumeInfo.description || 'Description unavailable at this time.';
 };
 
+
 Book.Query = function (req){ 
 
   this.q = `intitle:${req.body.search} `;
 };
 
 function renderResults(req, res, result_list){ 
+
   
   res.render('pages/searches/show', {'result_list' : result_list});
 }
@@ -39,7 +41,6 @@ function renderResults(req, res, result_list){
 function displayResults(req, res){
   const url = 'https://www.googleapis.com/books/v1/volumes';
   const query = new Book.Query(req);
-
   superagent.get(url)
     .query(query)
     .then(result => makeItSo(result))
