@@ -9,6 +9,7 @@ const pg = require('pg');
 const app = express();
 const superagent = require('superagent');
 
+
 //Server set-up
 const client = new pg.Client(process.env.DATABASE_URL)
 client.on('error', console.error);
@@ -50,6 +51,7 @@ function displayResults(req, res){
 };
 
 function makeItSo(result){ 
+  sqlGlobalVar.push(result)
   const list = result.body.items.map(curr => new Book(curr)); 
   sqlSave(result);
   return  list;
@@ -57,7 +59,8 @@ function makeItSo(result){
 
 function sqlSave(result)  {
   const sqlSaveToDatabase = 'INSERT INTO books (author, title, isbn, image_url, description) VALUES ($1,$2,$3,$4,$5)';
-  const sqlSaveArr = [result.body.items.authors, result.body.items.title, result.body.items.industryIdentifiers, result.body.items.imageLinks, result.body.items.description]  
+  const sqlSaveArr = [result.body.items[0].volumeInfo.authors[0], result.body.items[0].volumeInfo.title, result.body.items[0].volumeInfo.industryIdentifiers[0].identifier, result.body.items[0].volumeInfo.imageLinks.smallThumbnail, result.body.items[0].volumeInfo.description]  
+  console.log(`this is it ${sqlSaveArr}`)
 
   client.query(sqlSaveToDatabase, sqlSaveArr)
 }
