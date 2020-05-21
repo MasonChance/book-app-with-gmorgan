@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book App</title>
-  <link href="public/styles/reset.css" type="text/css" rel="stylesheet"/>
-  <link href="public/styles/base.css" type="text/css" rel="stylesheet"/>
-  <link href="public/styles/layout.css" type="text/css" rel="stylesheet"/>
-  <link href="public/styles/modules.css" type="text/css" rel="stylesheet"/>
-  <link href="public/styles/icons.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../public/styles/reset.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../public/styles/base.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../public/styles/layout.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../public/styles/modules.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../public/styles/icons.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <!-- baseline code for -->
@@ -17,12 +17,15 @@
 <!-- started with all ten listings, I am unclear how to render as template. probably make the <ul><li><liContents> into a partial and then use ejs for() to iterate and render to page. -->
 
 <ul>
+  <% for (let i = 0; i < result_list.length; i++) {%>
   <li>
-    <img src="#" alt="book cover of title">
-    <h2><%= result_list[0].authors %></h2>
-    <h3></h3>
+    <img src="<%= result_list[i].img %>" alt="book cover of title">
+
+    <h2><%= result_list[i].author %></h2>
+    <h3><%= result_list[i].title %></h3>
     <p></p>
   </li>
+  <% } %>
 </ul>
 
 
