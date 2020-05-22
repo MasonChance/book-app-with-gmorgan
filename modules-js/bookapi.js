@@ -53,16 +53,10 @@ function displayResults(req, res){
 
 function makeItSo(result){ 
   const list = result.body.items.map(curr => new Book(curr)); 
-  sqlSave(result);
   return  list;
 }
 
-function sqlSave(result)  {
-  const sqlSaveToDatabase = 'INSERT INTO books (author, title, isbn, image_url, description) VALUES ($1,$2,$3,$4,$5)';
-  const sqlSaveArr = [result.body.items[0].volumeInfo.authors[0], result.body.items[0].volumeInfo.title, result.body.items[0].volumeInfo.industryIdentifiers[0].identifier, result.body.items[0].volumeInfo.imageLinks.smallThumbnail, result.body.items[0].volumeInfo.description]  
 
-  client.query(sqlSaveToDatabase, sqlSaveArr)
-}
 
 
 module.exports = displayResults;
