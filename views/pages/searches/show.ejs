@@ -17,6 +17,7 @@
         <h3><%= result_list[i].title %></h3>
       </li>
       <form action="/book" method="POST">
+        <input name="id" type="hidden" value="<%=result_list[i].id%>">
         <input name="author" type="hidden" value="<%= result_list[i].author%>">
         <input name="title" type="hidden" value="<%= result_list[i].title%>">
         <input name="synopsis" type="hidden" value="<%= result_list[i].synopsis%>">
