@@ -30,8 +30,10 @@ client.connect();
 
 
 app.get('/', (req, res) => {
+
   console.log(req.body);
   res.redirect('/pages/index.ejs');
+
 });
 
 app.get('/pages/index.ejs', (req, res) => 
@@ -55,11 +57,11 @@ app.post('/book', (req, res) => {
 
 
 
-})
 
-app.get('/pages/searches/error', (req, res) => {
-  res.render('wrong turn')
-})
+app.get('/pages/searches/error', (req, res) => res.render('/pages/searches/error'));
+
+
+
 
 
 
