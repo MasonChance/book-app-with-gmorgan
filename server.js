@@ -30,7 +30,7 @@ client.connect();
 
 
 app.get('/', (req, res) => {
-  console.log(req.body);
+  
   res.redirect('/pages/searches/new');
 });
 
@@ -42,8 +42,7 @@ app.post('/pages/searches/show', displayResults);
 
 
 
-app.get('/pages/searches/error', (req, res) => {
-  res.render('wrong turn')
+app.get('/pages/searches/error', (req, res) => res.render('/pages/searches/error'))
 
 
 

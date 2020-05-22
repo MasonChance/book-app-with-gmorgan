@@ -17,6 +17,9 @@ client.connect();
 
 app.use(cors());
 
+//==== errorHandler exported from server.js ===//
+const errorHandler = require('./error.js');
+
 //====== constructor for Book result ===//
 function Book(obj){
   this.title = obj.volumeInfo.title;
@@ -45,14 +48,10 @@ function displayResults(req, res){
     .query(query)
     .then(result => makeItSo(result))
     .then(result_list => renderResults(req, res, result_list))
-    .catch(error => {
-      console.log(`error from .catch: ${error}`)
-      res.render('pages/error.ejs', {'error': error})
-    })
+    .catch(error => errorHandler(req, res, error))
 };
 
 function makeItSo(result){ 
-  sqlGlobalVar.push(result)
   const list = result.body.items.map(curr => new Book(curr)); 
   sqlSave(result);
   return  list;
@@ -61,7 +60,6 @@ function makeItSo(result){
 function sqlSave(result)  {
   const sqlSaveToDatabase = 'INSERT INTO books (author, title, isbn, image_url, description) VALUES ($1,$2,$3,$4,$5)';
   const sqlSaveArr = [result.body.items[0].volumeInfo.authors[0], result.body.items[0].volumeInfo.title, result.body.items[0].volumeInfo.industryIdentifiers[0].identifier, result.body.items[0].volumeInfo.imageLinks.smallThumbnail, result.body.items[0].volumeInfo.description]  
-  console.log(`this is it ${sqlSaveArr}`)
 
   client.query(sqlSaveToDatabase, sqlSaveArr)
 }
