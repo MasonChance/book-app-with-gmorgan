@@ -36,9 +36,10 @@ app.get('/', (req, res) => {
 
 });
 
-app.get('/pages/index.ejs', (req, res) => 
-  res.render('pages/index.ejs')
-);
+app.get('/pages/index.ejs', (req, res) => {
+
+  client.query('SELECT image_url, author, title FROM books').then(result => res.render('pages/index.ejs', {result_list: result.rows}))
+});
 
 
 app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
@@ -55,10 +56,19 @@ app.post('/book', (req, res) => {
   sqlSave(req)
   getArchivedId(req.body.title)
   // Redirect to the detail page of that book based on it's ID
-  res.redirect('detail');
+  res.render('/pages/detail/:id${result_list.body.id}');
 
 });
 
+
+
+app.get('/pages/detail/:id', (req, res) => {
+
+  client.query('SELECT * FROM books WHERE id $1', [req.params.id]).then(dataFromSql => {
+    
+    res.render('/pages/detail', dataFromSql.rows[0])
+  })
+});
 
 app.get('/pages/searches/error', (req, res) => res.render('/pages/searches/error'));
 

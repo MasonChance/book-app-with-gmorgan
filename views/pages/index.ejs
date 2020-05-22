@@ -1,7 +1,23 @@
 <%- include ('../partials/er-partials.ejs') %>
 
 <body>
-  <h1>We are not professionals.</h1>
+  
+  <main>
+    <h1>We are not professionals.</h1>
+    <ul>
+      <% for (let i = 0; i < result_list.length; i++) {%>
+      <li>
+        <img src="<%= result_list[i].image_url %>" alt="book cover of title">
+
+
+        <h2><%= result_list[i].author %></h2>
+        <h3><%= result_list[i].title %></h3>
+        <% console.log(result_list)%>
+        <a href="/pages/detail/<%= result_list[i].id%>">Details</a>
+      </li>
+    
+      <% } %>
+    </ul>
   
 </body>
 </html>
