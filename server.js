@@ -31,7 +31,12 @@ client.connect();
 
 app.get('/', (req, res) => res.redirect('/pages/index.ejs'));
 
-app.get('/pages/index.ejs', (req, res) => res.render('pages/index.ejs'));
+
+app.get('/pages/index.ejs', (req, res) => {
+
+  client.query('SELECT image_url, author, title FROM books').then(result => res.render('pages/index.ejs', {result_list: result.rows}))
+});
+
 
 
 app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
@@ -48,10 +53,20 @@ app.post('/book', (req, res) => {
   sqlSave(req)
   getArchivedId(req.body.title)
   // Redirect to the detail page of that book based on it's ID
+
   res.redirect('detail'); // how do we pass this Id to our details page so that the details callback can use it to fetch the data from the database and render it to the details page. 
 
 });
 
+
+
+app.get('/pages/detail/:id', (req, res) => {
+
+  client.query('SELECT * FROM books WHERE id $1', [req.params.id]).then(dataFromSql => {
+    
+    res.render('/pages/detail', dataFromSql.rows[0])
+  })
+});
 
 app.get('/pages/searches/error', (req, res) => res.render('/pages/searches/error'));
 

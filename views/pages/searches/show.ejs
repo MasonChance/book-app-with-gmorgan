@@ -1,37 +1,39 @@
+<%- include ('../../partials/he-partials.ejs') %>
+<body>
 <%- include ('../../partials/er-partials.ejs') %>
 
 
-<body>
 <!-- baseline code for -->
 
  <!-- put ul with an <h3> and a <p> inside the <li>s for results to render ul === results array from @server.js/app.post:fn:displayResults   li === ul[i] && contains 4 properties displaying the image, title, authors, description   !!! the variable that holds the list info is result_list!!!   -->
 <!-- started with all ten listings, I am unclear how to render as template. probably make the <ul><li><liContents> into a partial and then use ejs for() to iterate and render to page. -->
+  <main>
+    <ul>
+      <% for (let i = 0; i < result_list.length; i++) {%>
+      <li>
+        <img src="<%= result_list[i].img %>" alt="book cover of title">
 
-<ul>
-  <% for (let i = 0; i < result_list.length; i++) {%>
-  <li>
-
-    <img src="<%= result_list[i].img %>" alt="book cover of title">
-
-    <h2><%= result_list[i].author %></h2>
-    <h3><%= result_list[i].title %></h3>
-  </li>
-  <form action="/book" method="POST">
-    <input name="author" type="hidden" value="<%= result_list[i].author%>">
-    <input name="title" type="hidden" value="<%= result_list[i].title%>">
-    <input name="synopsis" type="hidden" value="<%= result_list[i].synopsis%>">
-    <input name="img" type="hidden" value="<%= result_list[i].img%>">
-    <button type="submit">Save Me!</button>
-  </form>
-  <% } %>
-</ul>
-
-
+        <h2><%= result_list[i].author %></h2>
+        <h3><%= result_list[i].title %></h3>
+      </li>
+      <form action="/book" method="POST">
+        <input name="id" type="hidden" value="<%=result_list[i].id%>">
+        <input name="author" type="hidden" value="<%= result_list[i].author%>">
+        <input name="title" type="hidden" value="<%= result_list[i].title%>">
+        <input name="synopsis" type="hidden" value="<%= result_list[i].synopsis%>">
+        <input name="img" type="hidden" value="<%= result_list[i].img%>">
+        <button type="submit">Save Me!</button>
+      </form>
+      <% } %>
+    </ul>
 
 
 
 
 
-  <script src="../../../server.js"></script>
+
+
+    <script src="../../../server.js"></script>
+  </main>
 </body>
 </html>
