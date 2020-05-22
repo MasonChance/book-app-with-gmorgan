@@ -51,7 +51,7 @@ function displayResults(req, res){
 };
 
 function makeItSo(result){ 
-  sqlGlobalVar.push(result)
+
   const list = result.body.items.map(curr => new Book(curr)); 
   sqlSave(result);
   return  list;

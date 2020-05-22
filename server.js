@@ -31,8 +31,12 @@ client.connect();
 
 app.get('/', (req, res) => {
   console.log(req.body);
-  res.redirect('/pages/searches/new');
+  res.redirect('/pages/index.ejs');
 });
+
+app.get('/pages/index.ejs', (req, res) => 
+  res.render('pages/index.ejs')
+);
 
 
 app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
@@ -40,7 +44,18 @@ app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
 // app.get('/pages/searches/show,', )
 app.post('/pages/searches/show', displayResults);
 
+app.get('/book/:id')
+//Display the single book
 
+app.post('/book', (req, res) => {
+  res.redirect('detail');
+  // Save Book
+  // Retrieve the ID
+  // Redirect to the detail page of that book
+
+
+
+})
 
 app.get('/pages/searches/error', (req, res) => {
   res.render('wrong turn')
