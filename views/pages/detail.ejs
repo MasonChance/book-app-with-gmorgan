@@ -1,10 +1,15 @@
+<%- include ('../../partials/he-partials.ejs') %>
+<body>
 <%- include ('../../partials/er-partials.ejs') %>
 
+  <main>
+  <img src="<%= result_list.image_url %>" alt="book cover of title">
 
-<img src="<%= result_list.img %>" alt="book cover of title">
+  <h2><%= result_list.author %></h2>
+  <h3><%= result_list.title %></h3>
 
-<h2><%= result_list.author %></h2>
-<h3><%= result_list.title %></h3>
-<a href="pages/detail"></a>
 
-<p><%= result_list.description %></p>
+  <p><%= result_list.description %></p>
+
+  </main>
+</body>
