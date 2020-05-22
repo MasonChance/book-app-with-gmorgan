@@ -47,18 +47,22 @@ app.get('/book/:id')
 // callback should call
 
 app.post('/book', (req, res) => { 
-  sqlSave(req) 
+  sqlSave(req) // saves to sql
+  const sqlId = getArchivedId(req.body.title); // returns ID from sql
   // Redirect to the detail page of that book based on it's ID
-  res.send('/pages/detail', getArchivedId(req.body.title)); //FIXME: !!! how do we pass this Id to our details page so that the details callback can use it to fetch the data from the database and render it to the details page. !!! childOf parentOf [x]
+
+  res.render('/pages/book/:id', showSavedBook(req, res, sqlId));
+  // !!! will this actually pass the id to showSavedBooks or would I need to chain all of these into a .then sequence within a broadscope call back function for the app.post(/book) route???
+  
+  //FIXME: !!! how do we pass this Id to our details page so that the details callback can use it to fetch the data from the database and render it to the details page. !!! 
 });
 
 
 
 app.get('/pages/detail', (req, res) => {
-
   client.query('SELECT * FROM books WHERE id $1', [req.params.id]).then(dataFromSql => {
     
-    res.render('/pages/detail', dataFromSql.rows[0])
+  res.render('/pages/detail', dataFromSql.rows[0])
   })
 });
 
@@ -74,10 +78,10 @@ function sqlSave(req, res)  {
 
 
 
-function getArchivedId(title){
+function getArchivedId(req, res){
   //needs, id from database.
   const sqlSearch = 'SELECT * FROM books WHERE title=$1';
-  const sql =[title];
+  const sql =[req.body.title];
   client.query(sqlSearch, sql)
   // access ID result.rows[0].id
     .then(record => (req, res)=> res.send(record.rows[0].id))
@@ -85,6 +89,14 @@ function getArchivedId(title){
   // returns ID from DataBase
 }
 
+//sends object literals to the appropriate route for rendering and acces via ejs. 
+function showSavedBook(req, res, id){
+  const sqlSelect = 'SELECT * FROM books WHERE id=$1';
+  const sqlValue = [id];
+  client.query(sqlSelect, sqlValue)
+    .then(sqlres => res.send({'id' : id}, {'title' : sqlres.rows[0].title}, {'author' : sqlres.rows[0].author}, {'synopsis' : sqlres.rows[0].synopsis}))
+    .catch(error => errorHandler(req, res, error))
+}
 
 
 
