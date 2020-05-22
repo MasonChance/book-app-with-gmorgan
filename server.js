@@ -31,26 +31,10 @@ client.connect();
 
 app.get('/', (req, res) => res.redirect('/pages/index.ejs'));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-app.get('/pages/index.ejs', (req, res) => res.render('pages/index.ejs'));
-=======
-  console.log(req.body);
-  res.redirect('/pages/index.ejs');
-
-});
-=======
->>>>>>> 39458194adec520d91a78444d77d322d3496138d
-
 app.get('/pages/index.ejs', (req, res) => {
 
   client.query('SELECT image_url, author, title FROM books').then(result => res.render('pages/index.ejs', {result_list: result.rows}))
 });
-<<<<<<< HEAD
->>>>>>> 9bed5e20f29a5294ab40678fd183f3954ef6e36b
-=======
-
->>>>>>> 39458194adec520d91a78444d77d322d3496138d
 
 
 app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
@@ -62,27 +46,15 @@ app.get('/book/:id')
 //Display the single book
 // callback should call
 
-app.post('/book', (req, res) => {
-  
-  sqlSave(req)
-  getArchivedId(req.body.title)
+app.post('/book', (req, res) => { 
+  sqlSave(req) 
   // Redirect to the detail page of that book based on it's ID
-<<<<<<< HEAD
-<<<<<<< HEAD
-  res.redirect('detail'); // how do we pass this Id to our details page so that the details callback can use it to fetch the data from the database and render it to the details page. 
-=======
-  res.render('/pages/detail/:id${result_list.body.id}');
->>>>>>> 9bed5e20f29a5294ab40678fd183f3954ef6e36b
-=======
-
-  res.redirect('detail'); // how do we pass this Id to our details page so that the details callback can use it to fetch the data from the database and render it to the details page. 
->>>>>>> 39458194adec520d91a78444d77d322d3496138d
-
+  res.send('/pages/detail', getArchivedId(req.body.title)); //FIXME: !!! how do we pass this Id to our details page so that the details callback can use it to fetch the data from the database and render it to the details page. !!! childOf parentOf [x]
 });
 
 
 
-app.get('/pages/detail/:id', (req, res) => {
+app.get('/pages/detail', (req, res) => {
 
   client.query('SELECT * FROM books WHERE id $1', [req.params.id]).then(dataFromSql => {
     
