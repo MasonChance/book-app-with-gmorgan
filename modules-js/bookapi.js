@@ -36,7 +36,7 @@ Book.Query = function (req){
 };
 
 function renderResults(req, res, result_list){ 
-  res.render('pages/searches/show', {'result_list' : result_list});
+  res.render('./pages/searches/show', {'result_list' : result_list});
 }
 
 
