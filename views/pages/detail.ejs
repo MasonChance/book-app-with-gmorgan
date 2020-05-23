@@ -1,13 +1,34 @@
-<%- include('../../partials/he-partials.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Book Details</title>
+
+  <title>Search Books</title>
+  <link href="../../reset.css" type="text/css" rel="stylesheet"/>
+  <link href="../../base.css" type="text/css" rel="stylesheet"/>
+  <link href="../../layout.css" type="text/css" rel="stylesheet"/>
+  <link href="../../modules.css" type="text/css" rel="stylesheet"/>
+  <link href="../../icons.css" type="text/css" rel="stylesheet"/>
+</head>
 <body>
-<%- include('../../partials/er-partials.ejs') %>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.ejs">Home</a></li>
+        <li><a href="/views/pages/searches/new.ejs" >Look for a book!</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <main>
+    <!-- this needs to reference Database Data. not the result_list data from the '/searches/show' route.  -->
   <img src="<%= result_list.image_url %>" alt="book cover of title">
 
   <h2><%= result_list.author %></h2>
-  <h3><%= result_list.title %></h3>
 
+  <h3><%= result_list.title %></h3>
 
   <p><%= result_list.description %></p>
 

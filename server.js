@@ -32,8 +32,8 @@ client.connect();
 app.get('/', (req, res) => res.redirect('/pages/index.ejs'));
 
 app.get('/pages/index.ejs', (req, res) => {
-
-  client.query('SELECT image_url, author, title FROM books').then(result => res.render('pages/index.ejs', {result_list: result.rows}))
+  client.query('SELECT image_url, author, title FROM books')
+  .then(result => res.render('pages/index.ejs', {result_list: result.rows}))
 });
 
 
@@ -42,23 +42,22 @@ app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
 // app.get('/pages/searches/show,', )
 app.post('/pages/searches/show', displayResults);
 
-app.get('/book/:id')
+app.get('/book/:id', (req, res) => {
+  res.send(console.log('hello from app.post(\'/book\''))
+})
 //Display the single book
 // callback should call
 
 app.post('/book', (req, res) => { 
   sqlSave(req) // saves to sql
-  const sqlId = getArchivedId(req.body.title); // returns ID from sql
-  // Redirect to the detail page of that book based on it's ID
-
-  res.render('/pages/book/:id', showSavedBook(req, res, sqlId));
+  res.redirect('/pages/book/:id');
   // !!! will this actually pass the id to showSavedBooks or would I need to chain all of these into a .then sequence within a broadscope call back function for the app.post(/book) route???
   
   //FIXME: !!! how do we pass this Id to our details page so that the details callback can use it to fetch the data from the database and render it to the details page. !!! 
 });
 
 
-
+//!!! this 'detail' route may be redundant. it seems that the /book/:id route IS the 'detail' veiw route for the detail.ejs not a '/detail' route. 
 app.get('/pages/detail', (req, res) => {
   client.query('SELECT * FROM books WHERE id $1', [req.params.id]).then(dataFromSql => {
     
@@ -68,7 +67,7 @@ app.get('/pages/detail', (req, res) => {
 
 app.get('/pages/searches/error', (req, res) => res.render('/pages/searches/error'));
 
-// 
+// Saves book to Database.called By 
 function sqlSave(req, res)  {
   const sqlSaveToDatabase = 'INSERT INTO books (author, title, image_url, description) VALUES ($1,$2,$3,$4)';
   //FIXME:  add isbn to constructor, add to sqlSaveArr below, add to sqlSaveToDatabase above in parenthesis, add $5 to sqlSaveToDataBase above. 
