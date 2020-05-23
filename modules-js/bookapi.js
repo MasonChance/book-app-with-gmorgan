@@ -22,21 +22,19 @@ const errorHandler = require('./error.js');
 
 //====== constructor for Book result ===//
 function Book(obj){
-  this.title = obj.volumeInfo.title;
-  this.author = obj.volumeInfo.authors || 'Unknown/Anonymous';
-  this.img = obj.volumeInfo.imageLinks.smallThumbnail || 'https://i.imgur.com/J5LVHEL.jpg';
-  this.synopsis = obj.volumeInfo.description || 'Description unavailable at this time.';
+  const objectAccess = obj.volumeInfo;
+  this.title = objectAccess.title;
+  this.author = objectAccess.authors || 'Unknown/Anonymous';
+  this.img = urlConflict(objectAccess) || 'https://i.imgur.com/J5LVHEL.jpg';
+  this.synopsis = objectAccess.description || 'Description unavailable at this time.';
 };
 
 
 Book.Query = function (req){ 
-
   this.q = `intitle:${req.body.search} `;
 };
 
 function renderResults(req, res, result_list){ 
-
-  
   res.render('pages/searches/show', {'result_list' : result_list});
 }
 
@@ -56,7 +54,16 @@ function makeItSo(result){
   return  list;
 }
 
+function urlConflict(objectAccess){
+ const urlReceived = objectAccess.imgLinks.smallThumbnail;
+ if(urlReceived[4] !== 's'){
+  let urlResolved = `https${urlReceived.slice(4)}`
+  return urlResolved;
+ } else {
+   return urlReceived;
+ }
 
+}
 
 
 module.exports = displayResults;
