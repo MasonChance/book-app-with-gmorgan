@@ -43,14 +43,15 @@ app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
 app.post('/pages/searches/show', displayResults);
 
 app.get('/book/:id', (req, res) => {
-  res.send(console.log('hello from app.post(\'/book\''))
+  //Display the single book
+  // callback should pull data from DB and
+  console.log('req.body', req.body);
+  res.render('pages/detail',console.log('hello from app.post(\'/book\''))
 })
-//Display the single book
-// callback should call
 
 app.post('/book', (req, res) => { 
   sqlSave(req) // saves to sql
-  res.redirect('/pages/book/:id');
+  res.redirect('/book/:id');
   // !!! will this actually pass the id to showSavedBooks or would I need to chain all of these into a .then sequence within a broadscope call back function for the app.post(/book) route???
   
   //FIXME: !!! how do we pass this Id to our details page so that the details callback can use it to fetch the data from the database and render it to the details page. !!! 
