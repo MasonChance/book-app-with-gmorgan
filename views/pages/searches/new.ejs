@@ -1,13 +1,33 @@
 
-<%- include ('../../partials/he-partials.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Books</title>
+
+  <link href="../../../reset.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../base.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../layout.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../modules.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../icons.css" type="text/css" rel="stylesheet"/>
+
+</head>
 <body>
-<%- include ('../../partials/er-partials.ejs') %>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/searches/new" >Look for a book!</a></li>
+      </ul>
+    </nav>
+  </header>
 
 <main>
   <h1></h1>
   <form action="/pages/searches/show" method="POST">
     <label for="search">Search</label>
-    <input name="search" type="text" required>
+    <input name="search" type="text" >
     <label for="author">Search by Author</label>
     <input name="author" type="checkbox">
     <input type="submit">

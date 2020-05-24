@@ -1,20 +1,35 @@
-<%- include ('../../partials/he-partials.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+  <title>Search Books</title>
+  <link href="../../../reset.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../base.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../layout.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../modules.css" type="text/css" rel="stylesheet"/>
+  <link href="../../../icons.css" type="text/css" rel="stylesheet"/>
+</head>
 <body>
-<%- include ('../../partials/er-partials.ejs') %>
+  
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/searches/new" >Look for a book!</a></li>
+      </ul>
+    </nav>
+  </header>
 
-
-<!-- baseline code for -->
-
- <!-- put ul with an <h3> and a <p> inside the <li>s for results to render ul === results array from @server.js/app.post:fn:displayResults   li === ul[i] && contains 4 properties displaying the image, title, authors, description   !!! the variable that holds the list info is result_list!!!   -->
-<!-- started with all ten listings, I am unclear how to render as template. probably make the <ul><li><liContents> into a partial and then use ejs for() to iterate and render to page. -->
   <main>
     <ul>
       <% for (let i = 0; i < result_list.length; i++) {%>
       <li>
-        <img src="<%= result_list[i].img %>" alt="book cover of title">
-
+        <img src="<%= result_list[i].img %>" alt="book cover of <%= result_list[i].title %>">
         <h2><%= result_list[i].author %></h2>
         <h3><%= result_list[i].title %></h3>
+
       </li>
       <form action="/book" method="POST">
         <input name="id" type="hidden" value="<%=result_list[i].id%>">
@@ -26,11 +41,6 @@
       </form>
       <% } %>
     </ul>
-
-
-
-
-
 
 
     <script src="../../../server.js"></script>

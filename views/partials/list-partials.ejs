@@ -1,8 +1,6 @@
 
 <!-- be sure this matches the test with all variables and the for() @show.ejs then delete from show.ejs and use `include()`  -->
-<li>
-  <img src="#" alt="book cover of title">
-  <h2></h2>
-  <h3></h3>
-  <p></p>
-</li>
+
+  <img src="<%= result_list[i].img %>" alt="book cover of <%= result_list[i].title %>">
+  <h2><%= result_list[i].author %></h2>
+  <h3><%= result_list[i].title %></h3>

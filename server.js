@@ -30,62 +30,43 @@ client.connect();
 
 
 app.get('/', (req, res) => res.redirect('/pages/index.ejs'));
-
-app.get('/pages/index.ejs', (req, res) => {
-
-  client.query('SELECT image_url, author, title FROM books').then(result => res.render('pages/index.ejs', {result_list: result.rows}))
-});
+app.get('/pages/index.ejs', showLibrary);
 
 
 app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
 
-// app.get('/pages/searches/show,', )
+
 app.post('/pages/searches/show', displayResults);
 
-app.get('/book/:id')
-//Display the single book
-// callback should call
+app.get('/book/:id', showSavedBook)
+app.post('/book', sqlSave);
 
-app.post('/book', (req, res) => { 
-  sqlSave(req) 
-  // Redirect to the detail page of that book based on it's ID
-  res.send('/pages/detail', getArchivedId(req.body.title)); //FIXME: !!! how do we pass this Id to our details page so that the details callback can use it to fetch the data from the database and render it to the details page. !!! childOf parentOf [x]
-});
+app.get('/pages/error', errorHandler);
 
-
-
-app.get('/pages/detail', (req, res) => {
-
-  client.query('SELECT * FROM books WHERE id $1', [req.params.id]).then(dataFromSql => {
-    
-    res.render('/pages/detail', dataFromSql.rows[0])
-  })
-});
-
-app.get('/pages/searches/error', (req, res) => res.render('/pages/searches/error'));
-
-// 
+// Saves book to Database.called in app.post(/book) 
 function sqlSave(req, res)  {
-  const sqlSaveToDatabase = 'INSERT INTO books (author, title, image_url, description) VALUES ($1,$2,$3,$4)';
+  const sqlSaveToDatabase = 'INSERT INTO books (author, title, image_url, description) VALUES ($1,$2,$3,$4) RETURNING id';
   //FIXME:  add isbn to constructor, add to sqlSaveArr below, add to sqlSaveToDatabase above in parenthesis, add $5 to sqlSaveToDataBase above. 
   const sqlSaveArr = [req.body.author, req.body.title, req.body.img, req.body.synopsis]  
   client.query(sqlSaveToDatabase, sqlSaveArr)
+  .then(id => res.redirect('book/' + id.rows[0].id))
+  .catch(error => errorHandler(req, res, error))
 }
 
-
-
-function getArchivedId(title){
-  //needs, id from database.
-  const sqlSearch = 'SELECT * FROM books WHERE title=$1';
-  const sql =[title];
-  client.query(sqlSearch, sql)
-  // access ID result.rows[0].id
-    .then(record => (req, res)=> res.send(record.rows[0].id))
+//sends object literals to the appropriate route for rendering and acces via ejs. !!! must be updated for IBN inclusion. 
+function showSavedBook(req, res){
+  const sqlSelect = 'SELECT * FROM books WHERE id=$1';
+  const sqlValue = [req.params.id];
+  client.query(sqlSelect, sqlValue)
+    .then(sqlres => res.render('pages/detail', {'sqlres' : sqlres.rows[0], 'displaybutton' : true}))
     .catch(error => errorHandler(req, res, error))
-  // returns ID from DataBase
 }
 
 
+function showLibrary(req, res){
+  client.query('SELECT id, image_url, author, title FROM books')
+  .then(result => res.render('pages/index.ejs', {result_list: result.rows}))
+}
 
 
 
