@@ -30,11 +30,7 @@ client.connect();
 
 
 app.get('/', (req, res) => res.redirect('/pages/index.ejs'));
-
-app.get('/pages/index.ejs', (req, res) => {
-  client.query('SELECT id, image_url, author, title FROM books')
-  .then(result => res.render('pages/index.ejs', {result_list: result.rows}))
-});
+app.get('/pages/index.ejs', showLibrary);
 
 
 app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
@@ -45,8 +41,7 @@ app.post('/pages/searches/show', displayResults);
 app.get('/book/:id', showSavedBook)
 app.post('/book', sqlSave);
 
-
-app.get('/pages/error', (req, res) => res.render('/pages/error'));
+app.get('/pages/error', errorHandler);
 
 // Saves book to Database.called in app.post(/book) 
 function sqlSave(req, res)  {
@@ -67,6 +62,11 @@ function showSavedBook(req, res){
     .catch(error => errorHandler(req, res, error))
 }
 
+
+function showLibrary(req, res){
+  client.query('SELECT id, image_url, author, title FROM books')
+  .then(result => res.render('pages/index.ejs', {result_list: result.rows}))
+}
 
 
 

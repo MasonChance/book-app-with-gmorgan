@@ -26,10 +26,10 @@
     <ul>
       <% for (let i = 0; i < result_list.length; i++) {%>
       <li>
-        <img src="<%= result_list[i].img %>" alt="book cover of title">
-
+        <img src="<%= result_list[i].img %>" alt="book cover of <%= result_list[i].title %>">
         <h2><%= result_list[i].author %></h2>
         <h3><%= result_list[i].title %></h3>
+
       </li>
       <form action="/book" method="POST">
         <input name="id" type="hidden" value="<%=result_list[i].id%>">
