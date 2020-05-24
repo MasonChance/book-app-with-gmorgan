@@ -16,21 +16,21 @@
   <header>
     <nav>
       <ul>
-        <li><a href="index">Home</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="/searches/new" >Look for a book!</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <!-- this needs to reference Database Data. not the result_list data from the '/searches/show' route. 
-  <img src="<%%= result_list.image_url %>" alt="book cover of title">
+    <!--  the sqlres data -->
+  <img src="<%= sqlres.image_url %>" alt="book cover of <%= sqlres.title %>">
 
-  <h2><%%= result_list.author %></h2>
+  <h2><%= sqlres.author %></h2>
 
-  <h3><%%= result_list.title %></h3>
+  <h3><%= sqlres.title %></h3>
 
-  <p><%%= result_list.description %></p> -->
+  <p><%= sqlres.description %></p>
 
   </main>
 </body>

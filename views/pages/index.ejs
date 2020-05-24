@@ -19,27 +19,28 @@
   <header>
     <nav>
       <ul>
-        <li><a href="./index">Home</a></li>
-        <li><a href="/searches/new" >Look for a book!</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="./searches/new" >Look for a book!</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
     <h1>We are not professionals.</h1>
+    <h4><%= result_list.length %> in your library</h4>
+
     <ul>
-      <% for (let i = 0; i < result_list.length; i++) {%>
+      <% for (let i = 0; i < result_list.length; i++) { %>
       <li>
         <img src="<%= result_list[i].image_url %>" alt="book cover of title">
 
-
         <h2><%= result_list[i].author %></h2>
         <h3><%= result_list[i].title %></h3>
-        <!-- <% console.log(result_list)%> -->
-        <a href="/pages/detail/">Details</a>
+        
+        <a href="/book/<%= result_list[i].id %>">Details</a>
       </li>
-    
       <% } %>
+      <!-- <%% console.log(result_list)%> -->
     </ul>
   
 </body>
