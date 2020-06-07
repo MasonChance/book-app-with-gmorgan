@@ -26,7 +26,6 @@ function Book(obj){
   this.title = objectAccess.title;
   this.author = objectAccess.authors ? objectAccess.authors[0] : 'Unknown/Anonymous';
   this.img = objectAccess.imageLinks ? urlConflict(objectAccess.imageLinks.smallThumbnail) :  'https://i.imgur.com/J5LVHEL.jpg';
-  
   this.synopsis = objectAccess.description || 'Description unavailable at this time.';
 };
 
@@ -56,16 +55,6 @@ function makeItSo(result){
   return  list;
 }
 
-// function urlConflict(objectAccess){
-//  const urlReceived = objectAccess;
-//  if(urlReceived[4] !== 's'){
-//   let urlResolved = `https${urlReceived.slice(4)}`
-//   return urlResolved;
-//  } else {
-//    return urlReceived;
-//  }
-
-// }
 
 function urlConflict(url){
   if(url.charAt(4) !== 's'){  

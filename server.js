@@ -66,6 +66,7 @@ function showSavedBook(req, res){
 function showLibrary(req, res){
   client.query('SELECT id, image_url, author, title FROM books')
   .then(result => res.render('pages/index.ejs', {result_list: result.rows}))
+  .catch(error => errorHandler(req, res, error))
 }
 
 
