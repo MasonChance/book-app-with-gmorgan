@@ -43,6 +43,9 @@ app.post('/book', sqlSave);
 
 app.get('/pages/error', errorHandler);
 
+
+
+
 // Saves book to Database.called in app.post(/book) 
 function sqlSave(req, res)  {
   const sqlSaveToDatabase = 'INSERT INTO books (author, title, image_url, description) VALUES ($1,$2,$3,$4) RETURNING id';
