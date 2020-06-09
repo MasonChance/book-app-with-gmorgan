@@ -31,7 +31,8 @@ function Book(obj){
 
 
 Book.Query = function (req){ 
-  this.q = `intitle:${req.body.search}` || `inauthor:${req.body.search}`;
+  this.q = `intitle:${req.body.search}` ;
+  // || `inauthor:${req.body.search}`;
 };
 
 function renderResults(req, res, result_list){ 
@@ -50,7 +51,7 @@ function displayResults(req, res){
 };
 
 function makeItSo(result){ 
-  // console.log('result.body.items[0].volumeInfo', result.body.items[0]);//[x]
+  console.log('result.body.items[0].volumeInfo', result);//[x]
   const list = result.body.items.map(curr => new Book(curr)); 
   return  list;
 }

@@ -10,12 +10,13 @@ require('dotenv').config();
 //Global Variables / App Setup
 const app = express();
 const PORT = process.env.PORT;
-const displayResults = require('./modules-js/bookapi.js')
 const pg = require('pg');
+
+const displayResults = require('./modules-js/bookapi.js')
 const errorHandler = require('./modules-js/error.js');
 
 //Middleware -public files are front end facing
-app.use(express.static('./public/styles'));
+app.use(express.static('/public/styles'));
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
