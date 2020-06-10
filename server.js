@@ -30,11 +30,11 @@ client.on('error', console.error);
 client.connect();
 
 
-app.get('/', (req, res) => res.redirect('/pages/index.ejs'));
-app.get('/pages/index.ejs', showLibrary);
+app.get('/', showLibrary);
 
 
-app.get('/pages/searches/new', (req, res) => res.render('pages/searches/new'));
+
+app.get('/searches', (req, res) => res.render('pages/searches/new.ejs'));
 
 
 app.post('/pages/searches/show', displayResults);
